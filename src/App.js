@@ -1,10 +1,14 @@
-import Navbar from "./components/Navbar";
+import { Route, Routes } from "react-router-dom";
+import Login from "./components/pages/Login";
 
 
 function App() {
   return (
     <>
-     <Navbar />
+     <Routes>
+     <Route path="/" element={<Login />} />
+      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+     </Routes>
     </>
   );
 }
