@@ -1,15 +1,27 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "./components/pages/Login";
-
+import Login from "./pages/Login";
+import { AuthProvider } from "./context/AuthContext";
+import MainScreen from "./components/MainScreen";
+import BinFinder from "./pages/BinFinder";
+import Users from "./pages/Users";
+import Posts from "./pages/Posts";
+import Listings from "./pages/Listings";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
-    <>
-     <Routes>
-     <Route path="/" element={<Login />} />
-      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-     </Routes>
-    </>
+    <AuthProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<MainScreen />}>
+          <Route index element={<Dashboard/>}/>
+          <Route path="users" element={<Users/>}/>
+          <Route path="posts" element={<Posts/>}/>
+          <Route path="listings" element={<Listings/>}/>
+          <Route path="binFinder" element={<BinFinder/>}/>
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 
