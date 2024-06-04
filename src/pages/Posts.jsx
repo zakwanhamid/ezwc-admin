@@ -51,6 +51,7 @@ const Posts = () => {
             postText: postDoc.exists() ? postDoc.data().text : null,
             postImages: postDoc.exists() ? postDoc.data().images : null,
             status: reportData.reportStat,
+            action: reportData.action
           };
         })
       );
