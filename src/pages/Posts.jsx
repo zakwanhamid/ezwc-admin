@@ -13,6 +13,7 @@ const Posts = () => {
   const [pendingReports, setPendingReports] = useState([]);
   const [resolvedReports, setResolvedReports] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  const [dataChanged, setDataChanged] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -51,7 +52,8 @@ const Posts = () => {
             postText: postDoc.exists() ? postDoc.data().text : null,
             postImages: postDoc.exists() ? postDoc.data().images : null,
             status: reportData.reportStat,
-            action: reportData.action
+            action: reportData.action,
+            reason: reportData.reason
           };
         })
       );
@@ -74,7 +76,7 @@ const Posts = () => {
 
 
       console.log("Pending Filtered Reports: ", pending);  // Log pending filtered reports
-      console.log("Resolved Filtered Report: ", resolved);  // Log resolved filtered reports
+      console.log("Resolved Filtered Report: ", resolved);  // Log resolved filtered report
 
       setReports(reportsList);
       setPendingReports(pending);
@@ -89,7 +91,22 @@ const Posts = () => {
     };
 
     fetchReports();
-  }, []);
+  }, [dataChanged]);
+
+  const handleReportUpdate = (updatedReport) => {
+    setReports(prevReports => {
+      const newReports = prevReports.map(report => report.id === updatedReport.id ? updatedReport : report);
+
+      const pending = newReports.filter(report => report.status === 'pending').sort((a, b) => a.timestamp - b.timestamp);
+      const resolved = newReports.filter(report => report.status === 'resolved').sort((a, b) => b.timestamp - a.timestamp);
+
+      setPendingReports(pending);
+      setResolvedReports(resolved);
+
+      return newReports;
+    });
+    setDataChanged(prev => !prev);
+  };
 
   return (
     <div className="p-4">
@@ -108,8 +125,8 @@ const Posts = () => {
           Resolved
         </button>
       </div>
-      {activeTab === 0 && <PendingReports reports={pendingReports} />}
-      {activeTab === 1 && <ResolvedReports reports={resolvedReports} />}
+      {activeTab === 0 && <PendingReports reports={pendingReports} onReportUpdate={handleReportUpdate} />}
+      {activeTab === 1 && <ResolvedReports reports={resolvedReports}  />}
     </div>
   )
 }

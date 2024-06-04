@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ModalDelete from './ModalDelete';
 import ModalIgnore from './ModalIgnore';
 
-export default function PendingReports({reports}) {
+export default function PendingReports({reports, onReportUpdate}) {
   const [filteredReports, setFilteredReports] = useState(reports);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -40,11 +40,6 @@ export default function PendingReports({reports}) {
     setShowModalIgnore(true);
   };
 
-  const handleReportUpdate = (updatedReport) => {
-    // Update the filteredReports state to remove the updated report
-    setFilteredReports(filteredReports.filter(report => report.id !== updatedReport.id));
-  };
-
   useEffect(() => {
     // Log the reports prop to inspect its contents
     console.log("PendingReports - reports prop:", reports);
@@ -60,7 +55,7 @@ export default function PendingReports({reports}) {
             <th className="py-2 px-4 border-b">Posted By</th>
             <th className="py-2 px-4 border-b">Reported By</th>
             <th className="py-2 px-4 border-b text-center">Number of Images</th>
-            <th className="py-2 px-4 border-b">Timestamp</th>
+            <th className="py-2 px-4 border-b">Time</th>
           </tr>
         </thead>
         <tbody>
@@ -155,11 +150,11 @@ export default function PendingReports({reports}) {
         onClose={() => setShowModalDelete(false)} 
         reportId={currentReport.id} 
         postId={currentReport.postId}
-        onReportUpdate={handleReportUpdate} />}
+        onReportUpdate={onReportUpdate} />}
       {showModalIgnore && <ModalIgnore 
         onClose={() => setShowModalIgnore(false)}
         reportId={currentReport.id}
-        onReportUpdate={handleReportUpdate}/>}
+        onReportUpdate={onReportUpdate}/>}
       
 
       
