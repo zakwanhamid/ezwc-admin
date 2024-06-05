@@ -33,10 +33,7 @@ const Posts = () => {
           };
           const reporterDoc = await getDoc(doc(db, 'users', reportData.reportedBy));
           const postDoc = await getDoc(doc(db, 'posts', reportData.postId));
-          const posterDoc = await getDoc(doc(db, 'users', postDoc.data().userId));
           console.log('postdocc:',postDoc.data().userId)
-
-          console.log('posterdoc:',posterDoc.data().bio)
 
           console.log('reportdata:',reportData)
           return {
@@ -73,11 +70,7 @@ const Posts = () => {
         return report.status === 'resolved';
       })
       .sort((a, b) => b.timestamp - a.timestamp);  // Descending order
-
-
-      console.log("Pending Filtered Reports: ", pending);  // Log pending filtered reports
-      console.log("Resolved Filtered Report: ", resolved);  // Log resolved filtered report
-
+      
       setReports(reportsList);
       setPendingReports(pending);
       setResolvedReports(resolved);
