@@ -4,11 +4,13 @@ import { useAuth } from '../context/AuthContext';
 import BinInfo from '../components/BinFinder/BinInfo';
 import { db } from '../firebase.config';
 import { collection, getDocs } from 'firebase/firestore';
+import ModalCreateBin from '../components/BinFinder/ModalCreateBin';
 
 const BinFinder = () => {
   const navigate = useNavigate();
   const { user, userData } = useAuth();
   const [bins, setBins] = useState([]);
+  const [showModalCreateBin, setShowModalCreateBin] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -34,7 +36,7 @@ const BinFinder = () => {
     <div className="p-4">
       <h1 className='text-2xl font-bold mb-4'>BinFinder</h1>
       <div>
-        <button className='bg-green-600 text-white px-4 py-2 rounded shadow-md cursor-pointer outline-none border-none select-none hover:bg-green-500 mr-2'>
+        <button onClick={() => setShowModalCreateBin(true)} className='bg-green-600 text-white px-4 py-2 rounded shadow-md cursor-pointer outline-none border-none select-none hover:bg-green-500 mr-2'>
           Create New Bin
         </button>
       </div>
@@ -47,6 +49,12 @@ const BinFinder = () => {
           />
         ))}
       </div>
+      {showModalCreateBin && (
+        <ModalCreateBin
+          onClose={() => setShowModalCreateBin(false)}
+          fetchBins={fetchBins}
+        />
+      )}
     </div>
   )
 }
