@@ -82,13 +82,6 @@ const Listings = () => {
       setReports(reportsList);
       setPendingReports(pending);
       setResolvedReports(resolved);
-
-
-
-
-      // setReports(reportsList);
-      // setPendingReports(reportsList.filter(report => report.status === 'pending'));
-      // setResolvedReports(reportsList.filter(report => report.status === 'resolved'));
     };
 
     fetchReports();
