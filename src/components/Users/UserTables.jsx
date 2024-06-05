@@ -16,10 +16,10 @@ export default function UsersTable({ users }) {
   };
 
   return (
-    <div className="px-4">
+    <div className="">
       <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-6">
         <table className="min-w-full bg-white">
-          <thead className='bg-white'>
+          <thead className='bg-green-500 text-white'>
             <tr>
               <th className="py-2 px-4 border-b">No.</th>
               <th className="py-2 px-4 border-b">User Name</th>

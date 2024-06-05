@@ -7,6 +7,7 @@ import Users from "./pages/Users";
 import Posts from "./pages/Posts";
 import Listings from "./pages/Listings";
 import Dashboard from "./pages/Dashboard";
+import Feedbacks from "./pages/Feedbacks";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="posts" element={<Posts/>}/>
           <Route path="listings" element={<Listings/>}/>
           <Route path="binFinder" element={<BinFinder/>}/>
+          <Route path="feedback" element={<Feedbacks/>}/>
         </Route>
       </Routes>
     </AuthProvider>

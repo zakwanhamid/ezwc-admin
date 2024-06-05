@@ -8,8 +8,8 @@ export default function SearchBar({ onSearch }) {
         };
 
   return (
-    <div className='p-6'>
-        <div className='bg-white w-80 rounded-lg h-[12] p-2 shadow-lg flex items-center mt-6'>
+    <div className='pb-4'>
+        <div className='bg-white w-80 rounded-lg h-[12] p-2 shadow-lg flex items-center mt-6 border border-green-300'>
             <HiOutlineSearch className='text-ezwcColor cursor-pointer'/>
             <input 
                 type="text" 

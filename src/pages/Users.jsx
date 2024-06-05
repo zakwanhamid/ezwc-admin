@@ -44,13 +44,12 @@ const Users = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div className="content">
-        <h1 className='text-3xl font-semibold'>Users' Informations</h1>
-        <SearchBar onSearch={handleSearch} />
-        <UsersTable users={filteredUsers} />
-      </div>
+    <div className="p-4">
+      <h1 className='text-2xl font-bold'>Users' Informations</h1>
+      <SearchBar onSearch={handleSearch} />
+      <UsersTable users={filteredUsers} />
     </div>
+    
   )
 }
 

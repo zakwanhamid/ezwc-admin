@@ -5,7 +5,8 @@ import {
 	HiOutlineQuestionMarkCircle,
 	HiOutlineCog,
     HiOutlineTrash,
-	HiGlobeAlt
+	HiGlobeAlt,
+	HiLightBulb
 } from 'react-icons/hi'
 
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -38,6 +39,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'BinFinder',
 		path: '/binFinder',
 		icon: <HiOutlineTrash />
+	},
+	{
+		key: 'feedback',
+		label: 'Feedbacks',
+		path: '/feedback',
+		icon: <HiLightBulb />
 	}
 ]
 

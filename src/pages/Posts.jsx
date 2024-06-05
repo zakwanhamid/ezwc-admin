@@ -106,13 +106,13 @@ const Posts = () => {
       <h1 className="text-2xl font-bold mb-4">Post Reports</h1>
       <div className="flex mb-4">
         <button
-          className={`px-4 py-2 ${activeTab === 0 ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+          className={`px-4 py-2 ${activeTab === 0 ? 'bg-blue-500 text-white rounded-xl hover:bg-blue-600' : 'bg-gray-300 rounded-xl hover:bg-gray-200'}`}
           onClick={() => setActiveTab(0)}
         >
           Pending
         </button>
         <button
-          className={`px-4 py-2 ml-2 ${activeTab === 1 ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+          className={`px-4 py-2 ml-2 ${activeTab === 1 ? 'bg-blue-500 text-white rounded-xl hover:bg-blue-600' : 'bg-gray-300 rounded-xl hover:bg-gray-200'}`}
           onClick={() => setActiveTab(1)}
         >
           Resolved
