@@ -3,7 +3,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { db } from '../../firebase.config';
 import { doc, updateDoc } from 'firebase/firestore';
 
-function ModalDelete({onClose, reportId, postId, onReportUpdate}) {
+function ModalDeleteListing({onClose, reportId, listingId, onReportUpdate}) {
     const modalRef = useRef();
     const [reason, setReason] = useState('');
 
@@ -15,8 +15,8 @@ function ModalDelete({onClose, reportId, postId, onReportUpdate}) {
 
     const handleDelete = async () => {
         try {
-            const reportRef = doc(db, 'reports', reportId);
-            const postRef = doc(db, 'posts', postId);
+            const reportRef = doc(db, 'reportsListing', reportId);
+            const listingRef = doc(db, 'listings', listingId);
             
             // Update the report in Firestore
             await updateDoc(reportRef, {
@@ -26,7 +26,7 @@ function ModalDelete({onClose, reportId, postId, onReportUpdate}) {
             });
 
             // Update the post status in Firestore
-            await updateDoc(postRef, {
+            await updateDoc(listingRef, {
                 status: 'inactive'
             });
 
@@ -45,7 +45,7 @@ function ModalDelete({onClose, reportId, postId, onReportUpdate}) {
             <IoTrashOutline size={50}/>
             
             <h1 className='text-3xl font-extrabold'>Confirm Delete</h1>
-            <p className='text-center'> Are you sure you want to delete this post? <br/> It will not be delete permanently but deactivated</p>
+            <p className='text-center'> Are you sure you want to delete this listing? <br/> It will not be delete permanently but deactivated</p>
             <input 
                 type="text" 
                 placeholder='Reason to delete?'
@@ -67,4 +67,4 @@ function ModalDelete({onClose, reportId, postId, onReportUpdate}) {
   )
 }
 
-export default ModalDelete
+export default ModalDeleteListing

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { db } from '../firebase.config';
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import PendingReportListing from '../components/Listings/PendingReportListing';
+import ResolvedReportListing from '../components/Listings/ResolvedReportListing';
 
 const Listings = () => {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const Listings = () => {
 
           console.log('reportdata:',reportData.timestamp)
           console.log('reportersdata:',reporterDoc.data().reason)
-          console.log('rlisitngssdata:',listingDoc.data().image)
+          console.log('rlisitngssdata:',listingDoc.data().price)
           return {
             id: reportDoc.id,
             listingId: reportData.listingId,
@@ -49,6 +51,7 @@ const Listings = () => {
             listingTitle: listingDoc.exists() ? listingDoc.data().title : null,
             listingDesc: listingDoc.exists() ? listingDoc.data().desc : null,
             listingImage: listingDoc.exists() ? listingDoc.data().image : null,
+            listingPrice: listingDoc.exists() ? listingDoc.data().price : null,
             status: reportData.reportStat,
             action: reportData.action,
             reason: reportData.reason
@@ -73,7 +76,7 @@ const Listings = () => {
       .sort((a, b) => b.timestamp - a.timestamp);  // Descending order
 
 
-      console.log("Pending Filtered Reports: ", pending);  // Log pending filtered reports
+      console.log("Pending Filtered Reports: ", pending);  // Log pending filtered reportew
       console.log("Resolved Filtered Report: ", resolved);  // Log resolved filtered report
 
       setReports(reportsList);
@@ -125,8 +128,8 @@ const Listings = () => {
           Resolved
         </button>
       </div>
-      {/* {activeTab === 0 && <PendingReports reports={pendingReports} onReportUpdate={handleReportUpdate} />}
-      {activeTab === 1 && <ResolvedReports reports={resolvedReports}  />} */}
+      {activeTab === 0 && <PendingReportListing reports={pendingReports} onReportUpdate={handleReportUpdate} />}
+      {activeTab === 1 && <ResolvedReportListing reports={resolvedReports}  />}
     </div>
   )
 }
