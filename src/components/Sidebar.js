@@ -15,7 +15,7 @@ export default function Sidebar() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      console.log('/login');
     } catch (error) {
       console.error('Error logging out: ', error);
     }

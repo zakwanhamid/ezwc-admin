@@ -1,25 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import loginBg from '../assets/loginBg.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../firebase.config';
+import { auth, signOut } from '../firebase.config';
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = async (event) => {
         event.preventDefault();
-    
+        setLoading(true);
+        setError(null); // Reset the error
+
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log('User signed in successfully');
-            navigate('/');
+
+            // Check if the logged-in user's email is "cgss@usm.my"
+            if (userCredential.user.email === 'cgss@usm.my') {
+                navigate('/');
+            } else {
+                // Sign out the user if the email is not "cgss@usm.my"
+                await signOut(auth);
+                setError('Invalid email or password');
+                setLoading(false);
+            }
         } catch (error) {
-            console.error(error);
+            console.error('Error signing in: ', error);
+            setError('Invalid email or password');
+            setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (user && user.email === 'cgss@usm.my') {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     return (
         <div className='w-full h-screen flex items-start'>
@@ -38,7 +61,8 @@ const Login = () => {
                 <div className='w-full flex flex-col max-w-[500px]'>
                     <div>
                         <h3 className='text-3xl font-semibold mb-4'>Admin Login</h3>
-                        <p className='text-bsae mb-2'>Welcome Back! Please enter your details.</p>
+                        <p className='text-base mb-2'>Welcome Back! Please enter your details.</p>
+                        {error && <p className="text-red-500">{error}</p>}
                         <form onSubmit={handleLogin} className='w-full flex flex-col'>
                             <input
                                 type='email'
@@ -55,17 +79,17 @@ const Login = () => {
                                 className='w-full text-black py-2 my-2 bg-transparent border-b border-black outline-none focus:outline-none'
                             />
                             <div className='w-full flex flex-col my-4'>
-                                <button type='submit' className='w-full text-white my-2 bg-ezwcColor rounded-md p-2 text-center flex items-center justify-center'>
-                                    Log In
+                                <button type='submit' className='w-full text-white my-2 bg-ezwcColor rounded-md p-2 text-center flex items-center justify-center' disabled={loading}>
+                                    {loading ? 'Logging in...' : 'Log In'}
                                 </button>
-                                <Link className='text-center text-ezwcColor'>Forgot Password?</Link>
+                                <Link to="/forgot-password" className='text-center text-ezwcColor'>Forgot Password?</Link>
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <div className='w-full flex items-center justify-center'>
-                    <p>This site is only associate for CGSS staff</p>
+                    <p>This site is only for CGSS staff</p>
                 </div>
             </div>
         </div>

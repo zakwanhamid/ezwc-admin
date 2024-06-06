@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const auth = getAuth();
   const db = getFirestore();
 
@@ -21,9 +22,16 @@ export const AuthProvider = ({ children }) => {
         } else {
           console.log("No such document!");
         }
+        // Check if the user email is admin
+        if (user.email === 'cgss@usm.my') {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
       } else {
         setUser(null);
         setUserData(null);
+        setIsAdmin(false);
       }
     });
 
@@ -39,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, userData, logout }}>
+    <AuthContext.Provider value={{ user, userData, isAdmin, logout }}>
       {children}
     </AuthContext.Provider>
   );
