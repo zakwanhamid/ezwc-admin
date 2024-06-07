@@ -23,7 +23,9 @@ const Users = () => {
     const fetchUsers = async () => {
       const usersCollection = collection(db, 'users');
       const userSnapshot = await getDocs(usersCollection);
-      const userList = userSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      const userList = userSnapshot.docs
+        .map(doc => ({ ...doc.data(), id: doc.id }))
+        .filter(user => user.email !== 'cgss@usm.my'); // Exclude cgss@usm.myy
       setUsers(userList);
       setFilteredUsers(userList);
     };
