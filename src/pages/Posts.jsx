@@ -39,7 +39,7 @@ const Posts = () => {
           return {
             id: reportDoc.id,
             postId: reportData.postId,
-            posterName: postDoc.exists() ? postDoc.data().userName : 'Unknown',
+            posterName: postDoc.exists() ? postDoc.data().userName : 'Unknown', 
             posterEmail: postDoc.exists() ? postDoc.data().userEmail : 'Unknown',
             reporterName: reporterDoc.exists() ? reporterDoc.data().name : 'Unknown',
             reporterEmail: reporterDoc.exists() ? reporterDoc.data().email : 'Unknown',
