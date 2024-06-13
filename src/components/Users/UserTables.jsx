@@ -36,7 +36,7 @@ export default function UsersTable({ users }) {
                   <td className="py-2 px-4 border-b">{page * rowsPerPage + index + 1}</td>
                   <td className="py-2 px-4 border-b">{user.name}</td>
                   <td className="py-2 px-4 border-b">{user.email}</td>
-                  <td className="py-2 px-4 border-b text-center">{user.userHP ? `0${user.userHP}` : <span className="text-gray-500">N/A</span>}</td>
+                  <td className="py-2 px-4 border-b text-center">{user.userHP ? `${user.userHP}` : <span className="text-gray-500">N/A</span>}</td>
                   <td className="py-2 px-4 border-b">{user.bio ? `${user.bio}` : <span className="text-gray-500">N/A</span>}</td>
                 </tr>
               ))}

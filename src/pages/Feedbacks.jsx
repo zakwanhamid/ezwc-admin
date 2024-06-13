@@ -8,11 +8,10 @@ import FeedbacksTable from '../components/Feedbacks/FeedbacksTable';
 
 const Feedbacks = () => {
   const navigate = useNavigate();
-  const { user, userData } = useAuth();
-  const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const { user } = useAuth();
   const [feedbacks, setFeedbacks] = useState([]);
+  const [filteredFeedbacks, setFilteredFeedbacks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     if (!user) {
@@ -43,6 +42,7 @@ const Feedbacks = () => {
       );
 
       setFeedbacks(feedbacksList);
+      setFilteredFeedbacks(feedbacksList); // Set initial filtered feedbacks
     };
 
     fetchFeedbacks();
@@ -51,12 +51,12 @@ const Feedbacks = () => {
   const handleSearch = (term) => {
     setSearchTerm(term);
     if (term === '') {
-      setFilteredUsers(users);
+      setFilteredFeedbacks(feedbacks);
     } else {
-      const filtered = users.filter(user =>
-        user.name.toLowerCase().startsWith(term.toLowerCase())
+      const filtered = feedbacks.filter(feedback =>
+        feedback.userName.toLowerCase().includes(term.toLowerCase())
       );
-      setFilteredUsers(filtered);
+      setFilteredFeedbacks(filtered);
     }
   };
 
@@ -64,7 +64,7 @@ const Feedbacks = () => {
     <div className="p-4">
       <h1 className='text-2xl font-bold mb-4'>Feedbacks</h1>
       <SearchBar onSearch={handleSearch} />
-      <FeedbacksTable feedbacks={feedbacks} />
+      <FeedbacksTable feedbacks={filteredFeedbacks} />
     </div>
   );
 };
